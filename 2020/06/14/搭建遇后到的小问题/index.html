@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="o5danna"><meta name="renderer" content="webkit"><meta name="copyright" content="o5danna"><meta name="keywords" content="Hexo"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>搭建后遇到的小问题 · o5danna的小窝</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/o5_ico.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 4.2.1"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/o5danna.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">o5danna</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">o5danna的小窝</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">搭建后遇到的小问题</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-06-14</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>简单记录一下遇到的小问题吧，大部分的问题<a href="https://bing.com" target="_blank" rel="noopener">bing</a>一下就好了，剩下的小问题记录下给后人乘凉</p>
+<h2 id="基于hexo-GitHub搭建"><a href="#基于hexo-GitHub搭建" class="headerlink" title="基于hexo+GitHub搭建"></a>基于hexo+GitHub搭建</h2><p>首先我是参考了Github + Jekyll然后搭建的过程发现有点繁琐，所以我就选择了GitHub + hexo，主题是用的<a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener">Longlongyu</a>的主题，遇到的两个问题参考<a href="https://uuzdaisuki.com/2017/04/08/%E7%BB%86%E6%95%B0%E7%94%A8github-pages%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E9%81%87%E5%88%B0%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91/" target="_blank" rel="noopener">麻薯</a>搞定的。</p>
+<h3 id="小问题"><a href="#小问题" class="headerlink" title="小问题"></a>小问题</h3><p>搭建没遇到什么问题，需要注意的地方就是ssh和hexo的_config.yml的配置，其他的都按照教程一步一步来就好了,我踩的第一个坑是favicon的一个问题.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=<span class="string">"icon href="</span>/img/assest/o5_ico.ico<span class="string">"&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这个图片命名是因为不知道为什么只要在assest文件夹下面使用favicon.ico这个命名和后辍不管什么图片都会变成另一张图片很离奇。<br>我第一次上传忘了加后辍”.ico”，打开网址当然图片没有显示，然后我修改了主题的_config.yml添加了后辍也在本地启动了服务试了试的确显示了图片，第二次上传到GitHub之后图片依然没有显示出来，然后我就在想，有没有可能是我只修改了一点所以可能hexo认定我没有修改于是没有同步到GitHub上，于是我再次尝试去修改一下图片名字并且配置到”_config.yml”，之后本地启动服务图片显示然后第三次上传到GitHub上图片显示。</p>
+<hr>
+<p>还有一个小问题，就是当初修改头像的时候，同样本地启动服务头像修改完成但是上传到GitHub上打开网址头像并没有修改，这里大佬说让我用其他浏览器打开试试，然后我用Edge打开网址发现居然是修改后的，大佬跟我说是浏览器的一个缓存的问题，等几分钟就好了。</p>
+<hr>
+<p>搭建的时候因为相关教程真的数不胜数所以没遇到什么问题，所以记录一下搭建完成后遇到的小坑，方便后人来乘凉。</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://o5danna.github.io">o5danna</a></p><p> <span>Link:  </span><a href="https://o5danna.github.io/2020/06/14/%E6%90%AD%E5%BB%BA%E9%81%87%E5%90%8E%E5%88%B0%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98/">https://o5danna.github.io/2020/06/14/%E6%90%AD%E5%BB%BA%E9%81%87%E5%90%8E%E5%88%B0%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2020/06/14/hello-world/" title="Hello World"><span>< PreviousPost</span><br><span class="prevTitle">Hello World</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
