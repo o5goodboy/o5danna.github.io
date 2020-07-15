@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="o5danna"><meta name="renderer" content="webkit"><meta name="copyright" content="o5danna"><meta name="keywords" content="Hexo"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>整理笔记 · o5danna的小窝</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/o5_ico.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 4.2.1"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/o5danna.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">o5danna</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">o5danna的小窝</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">整理笔记</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-07-08</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>疫情期间搬完砖在家蛮闲的抽空整理下以前的笔记</p>
+<h3 id="数字类型和字符串类型的转换"><a href="#数字类型和字符串类型的转换" class="headerlink" title="数字类型和字符串类型的转换"></a>数字类型和字符串类型的转换</h3><p>一般字符串和数字转换首先想到的是tostring()和parseInt()，其实还有更直接的办法直接+-，下面是个例子。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span>  a = 10;//number</span><br><span class="line"><span class="built_in">let</span>  b = <span class="string">"5"</span>//string</span><br><span class="line">console.log(typeof (a+<span class="string">""</span>),typeof (b-0))//输出string number</span><br></pre></td></tr></table></figure>
+<p>以前弄音乐播放器踩到的坑一开始看-0和+” “感觉没用省略了之后发现一堆报错，关于为什么能转换的原理想了解的可以去查一下<strong>js隐式转换</strong></p>
+<h3 id="取整"><a href="#取整" class="headerlink" title="取整"></a>取整</h3><p>这个方法说白了就是把浮点数小数点后面的去掉</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.5 | 0 //1</span><br><span class="line">-1.5 | 0 //-1</span><br></pre></td></tr></table></figure>
+<h3 id="var和let-在函数内定义的变量跑到了函数外面"><a href="#var和let-在函数内定义的变量跑到了函数外面" class="headerlink" title="var和let,在函数内定义的变量跑到了函数外面"></a>var和let,在函数内定义的变量跑到了函数外面</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">foo</span></span>()&#123;</span><br><span class="line">  var a = b = 1;</span><br><span class="line">  <span class="built_in">let</span> a2 = b2 = 2;</span><br><span class="line">&#125;</span><br><span class="line">foo();</span><br><span class="line">console.log(typeof a,typeof b,typeof a2,typeof b2)</span><br><span class="line">//结果是undefined number undefined number</span><br></pre></td></tr></table></figure>
+<p>解决办法是var和let定义的时候用var/let a = 1,b = 1;</p>
+<h3 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h3><p>indexOf()方法返回在该数组中第一个找到的元素位置，如果它不存在则返回-1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var arr=[1,2,3,4,5,4,1,2,3,0];</span><br><span class="line">   var newArr=[];</span><br><span class="line">   <span class="keyword">for</span> (var i=0;i&lt;arr.length;i++) &#123;</span><br><span class="line">       <span class="keyword">if</span>(newArr.indexOf(arr[i])==-1)&#123;</span><br><span class="line">           <span class="keyword">if</span>(typeof(arr[i])==<span class="string">'number'</span>)&#123;</span><br><span class="line">               newArr.push(arr[i]);</span><br><span class="line">           &#125;    </span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   console.log(newArr);</span><br></pre></td></tr></table></figure>
+<h3 id="css-opacity影响子元素解决方案"><a href="#css-opacity影响子元素解决方案" class="headerlink" title="css,opacity影响子元素解决方案"></a>css,opacity影响子元素解决方案</h3><p>父级定义了opacity后，子元素也会被父级影响到解决方案有两个。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//解决方案一，添加一个蒙版div</span><br><span class="line">    &lt;div class=<span class="string">"a"</span> style=<span class="string">"position: absolute; width: 300px;height: 300px; background-color: red;"</span>&gt;</span><br><span class="line">        &lt;div class=<span class="string">"Mask"</span> style=<span class="string">"position: absolute; width: 300px; height: 300px; background-color:white; </span></span><br><span class="line"><span class="string">                                opacity: 0.5;"</span>&gt;&lt;/div&gt;//修改蒙版图层的透明度，思路是既然会影响到子元素那么没有子元素就没问题了</span><br><span class="line">        &lt;div class=<span class="string">"b"</span> style=<span class="string">"    position: absolute; width: 200px; height: 200px; background-color:black;"</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">//解决方案二，使用rgba,a指的是Alpha透明度</span><br><span class="line">    &lt;div class=<span class="string">"a"</span> style=<span class="string">"width: 300px;height: 300px; background-color:rgba(255,0,0,0.5);"</span>&gt;</span><br><span class="line">        &lt;div class=<span class="string">"b"</span> style=<span class="string">"width: 200px; height: 200px; background-color:black;"</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>为了让方案一和方案二效果一样在方案一中添加了position，毕竟div是块级元素，兄弟节点的div会单独占一行</p>
+<h3 id="利用box-shadow效果来实现外发光效果"><a href="#利用box-shadow效果来实现外发光效果" class="headerlink" title="利用box-shadow效果来实现外发光效果"></a>利用box-shadow效果来实现外发光效果</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=<span class="string">"b"</span> style=<span class="string">"width: 200px; height: 200px; background-color:black;</span></span><br><span class="line"><span class="string">box-shadow: 0px 0px 40px black"</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>定义的时候把水平阴影数值和垂直阴影数值设置为0就好，不过对于棱角部分这个外发光表现不好，我处理方法都是把角变成圆角，以后如果有需求再考虑写一个好一点的外发光</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>笔记都不见了，看着自己写的小玩具遇到的坑来一点补充的，现在看css效果发现，说不定css才是最终boss。</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://o5danna.github.io">o5danna</a></p><p> <span>Link:  </span><a href="https://o5danna.github.io/2020/07/08/%E4%BB%A5%E5%89%8D%E7%9A%84%E6%80%BB%E7%BB%93%E7%9A%84%E7%AC%94%E8%AE%B0/">https://o5danna.github.io/2020/07/08/%E4%BB%A5%E5%89%8D%E7%9A%84%E6%80%BB%E7%BB%93%E7%9A%84%E7%AC%94%E8%AE%B0/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2020/06/14/%E6%90%AD%E5%BB%BA%E9%81%87%E5%90%8E%E5%88%B0%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98/" title="搭建后遇到的小问题"><span>NextPost ></span><br><span class="nextTitle">搭建后遇到的小问题</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
